@@ -11,6 +11,6 @@ public class LaserMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.Translate (Vector3.forward * 10);
+		this.transform.Translate (Vector3.forward * 20);
 	}
 }
