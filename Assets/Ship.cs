@@ -8,11 +8,12 @@ public class Ship : MonoBehaviour {
 	public GameObject camera;
 
 	float vertical;
+	float roll;
 
 	public float acceleration;
-	public float speed;
-	public float maxSpeed;
-	public float minSpeed;
+	public float thrust;
+	public float maxThrust;
+	public float minThrust;
 
 	// Use this for initialization
 	void Start () {
@@ -22,20 +23,23 @@ public class Ship : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		vertical = Input.GetAxis ("Vertical");
+		roll = Input.GetAxis ("Roll");
 
-		if (vertical > 0.1 && speed <= maxSpeed) {
-			speed += Time.deltaTime * acceleration;
-		} else if (vertical < 0 && speed >= minSpeed) {
-			speed -= Time.deltaTime * acceleration;
+		if (vertical > 0.1 && thrust <= maxThrust) {
+			thrust += Time.deltaTime * acceleration;
+		} else if (vertical < 0 && thrust >= minThrust) {
+			thrust -= Time.deltaTime * acceleration;
 		}
-		if (vertical == 0 && speed < 0) {
-			speed += Time.deltaTime * 5;
+		if (vertical == 0 && thrust < 0) {
+			thrust += Time.deltaTime * 5;
 		}
-		if (vertical == 0 && speed > 0) {
-			speed -= Time.deltaTime * 5;
+		if (vertical == 0 && thrust > 0) {
+			thrust -= Time.deltaTime * 5;
 		}
 
-		camera.GetComponent<Camera> ().fieldOfView = 60 + (speed * 2);
+		this.transform.Rotate(Vector3.forward * (roll * 180));
+
+		camera.GetComponent<Camera> ().fieldOfView = 60 + (thrust * 2);
 		if (camera.GetComponent<Camera> ().fieldOfView > 70) {
 			camera.GetComponent<Camera> ().fieldOfView = 70;
 		}
@@ -46,6 +50,6 @@ public class Ship : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		rigidbody.AddForce (transform.forward * speed, ForceMode.VelocityChange);
+		rigidbody.AddForce (transform.forward * thrust, ForceMode.VelocityChange);
 	}
 }
