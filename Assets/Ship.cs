@@ -22,6 +22,7 @@ public class Ship : MonoBehaviour {
 
 	public GameObject muzzleParticles;
 	public GameObject muzzleFlash;
+	public GameObject laser;
 
 
 	// Use this for initialization
@@ -73,6 +74,7 @@ public class Ship : MonoBehaviour {
 	{
 		muzzleParticles.GetComponent<ParticleEmitter> ().Emit ();
 		muzzleFlash.SetActive (true);
+		Instantiate (laser, muzzleFlash.transform.position, muzzleFlash.transform.rotation);
 		yield return new WaitForSeconds(0.10f);
 		muzzleFlash.SetActive (false);
 	}
