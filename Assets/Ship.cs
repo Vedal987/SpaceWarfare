@@ -15,9 +15,18 @@ public class Ship : MonoBehaviour {
 	public float maxThrust;
 	public float minThrust;
 
+	public int health;
+	public int maxHealth;
+
+	public float timeBetweenShot;
+
+	public GameObject muzzleParticles;
+	public GameObject muzzleFlash;
+
+
 	// Use this for initialization
 	void Start () {
-	
+		health = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -37,6 +46,13 @@ public class Ship : MonoBehaviour {
 			thrust -= Time.deltaTime * 5;
 		}
 
+		if (timeBetweenShot <= 0 && Input.GetMouseButton(0)) {
+			timeBetweenShot = 0.2f;
+			StartCoroutine (Shoot ());
+		}
+
+		timeBetweenShot -= Time.deltaTime;
+
 		this.transform.Rotate(Vector3.forward * (roll * 180));
 
 		camera.GetComponent<Camera> ().fieldOfView = 60 + (thrust * 2);
@@ -51,5 +67,13 @@ public class Ship : MonoBehaviour {
 	void FixedUpdate()
 	{
 		rigidbody.AddForce (transform.forward * thrust, ForceMode.VelocityChange);
+	}
+
+	IEnumerator Shoot()
+	{
+		muzzleParticles.GetComponent<ParticleEmitter> ().Emit ();
+		muzzleFlash.SetActive (true);
+		yield return new WaitForSeconds(0.10f);
+		muzzleFlash.SetActive (false);
 	}
 }
