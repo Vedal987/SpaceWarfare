@@ -27,6 +27,8 @@ public class Ship : MonoBehaviour {
 
 	public int damage;
 
+	public AudioClip laserSFX;
+
 	// Use this for initialization
 	void Start () {
 		health = maxHealth;
@@ -76,6 +78,7 @@ public class Ship : MonoBehaviour {
 	{
 		muzzleParticles.GetComponent<ParticleEmitter> ().Emit ();
 		muzzleFlash.SetActive (true);
+		this.GetComponent<AudioSource> ().PlayOneShot (laserSFX);
 		Instantiate (laser, muzzleFlash.transform.position, muzzleFlash.transform.rotation);
 		Raycast ();
 		yield return new WaitForSeconds(0.10f);
@@ -91,5 +94,10 @@ public class Ship : MonoBehaviour {
 				hit.collider.transform.SendMessage ("Damage", damage);
 			}
 		}
+	}
+
+	void Damage(int damage)
+	{
+		health -= damage;
 	}
 }
