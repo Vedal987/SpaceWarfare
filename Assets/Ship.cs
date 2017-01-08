@@ -20,10 +20,12 @@ public class Ship : MonoBehaviour {
 
 	public float timeBetweenShot;
 
+	public GameObject muzzle;
 	public GameObject muzzleParticles;
 	public GameObject muzzleFlash;
 	public GameObject laser;
 
+	public int damage;
 
 	// Use this for initialization
 	void Start () {
@@ -75,7 +77,19 @@ public class Ship : MonoBehaviour {
 		muzzleParticles.GetComponent<ParticleEmitter> ().Emit ();
 		muzzleFlash.SetActive (true);
 		Instantiate (laser, muzzleFlash.transform.position, muzzleFlash.transform.rotation);
+		Raycast ();
 		yield return new WaitForSeconds(0.10f);
 		muzzleFlash.SetActive (false);
+	}
+
+	void Raycast()
+	{
+		RaycastHit hit;
+		Vector3 direction = muzzle.transform.TransformDirection(Vector3.forward);
+		if (Physics.Raycast (muzzle.transform.position, direction, out hit, 20000)) {
+			if (hit.collider.transform.tag == "Enemy") {
+				hit.collider.transform.SendMessage ("Damage", damage);
+			}
+		}
 	}
 }
