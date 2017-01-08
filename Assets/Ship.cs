@@ -54,7 +54,7 @@ public class Ship : MonoBehaviour {
 
 		timeBetweenShot -= Time.deltaTime;
 
-		this.transform.Rotate(Vector3.forward * (roll * 180));
+		//this.transform.Rotate(Vector3.forward * (roll * 180));
 
 		camera.GetComponent<Camera> ().fieldOfView = 60 + (thrust * 2);
 		if (camera.GetComponent<Camera> ().fieldOfView > 70) {
