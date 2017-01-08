@@ -18,9 +18,9 @@ public class explosionForce : MonoBehaviour {
 
 		Destroy (gameObject, waitTime);
 		int n = Random.Range(1,explodeSounds.Length);
-		myaudio.clip = explodeSounds[n];
-		myaudio.pitch = 0.9f + 0.1f *Random.value;
-		myaudio.PlayOneShot(myaudio.clip);
+		//myaudio.clip = explodeSounds[n];
+		//myaudio.pitch = 0.9f + 0.1f *Random.value;
+		//myaudio.PlayOneShot(myaudio.clip);
 		
 		explodeSounds[n] = explodeSounds[0];
 		explodeSounds[0] = myaudio.clip;
