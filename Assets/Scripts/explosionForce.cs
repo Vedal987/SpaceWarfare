@@ -22,8 +22,8 @@ public class explosionForce : MonoBehaviour {
 		//myaudio.pitch = 0.9f + 0.1f *Random.value;
 		//myaudio.PlayOneShot(myaudio.clip);
 		
-		explodeSounds[n] = explodeSounds[0];
-		explodeSounds[0] = myaudio.clip;
+		//explodeSounds[n] = explodeSounds[0];
+		//explodeSounds[0] = myaudio.clip;
 		Vector3 explosionPos = transform.position;
 		Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
 		foreach (Collider hit in colliders) 
