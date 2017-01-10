@@ -40,6 +40,7 @@ public class Ship : MonoBehaviour {
 	void Update () {
 		if (health <= 0) {
 			Instantiate (explosion, this.transform.position, Quaternion.identity);
+			Destroy (this.gameObject);
 		}
 		vertical = Input.GetAxis ("Vertical");
 		roll = Input.GetAxis ("Roll");
