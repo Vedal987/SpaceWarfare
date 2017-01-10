@@ -17,6 +17,10 @@ public class Bot : MonoBehaviour {
 
 	public AudioClip laserSFX;
 
+	public float timeBetweenShot;
+
+	GameObject target;
+
 	// Use this for initialization
 	void Start () {
 		health = maxHealth;
@@ -24,6 +28,13 @@ public class Bot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		timeBetweenShot -= Time.deltaTime;
+		if (target != null) {
+			if (timeBetweenShot <= 0) {
+				timeBetweenShot = 0.2f;
+				StartCoroutine (Shoot ());
+			}
+		}
 	}
 
 	void Damage(int damage)
@@ -34,7 +45,20 @@ public class Bot : MonoBehaviour {
 			Destroy (this.gameObject);
 		}
 	}
-		
+
+	void Detected (Collider col)
+	{
+		if (col.tag == "Player") {
+			target = col.gameObject;
+		}
+	}
+
+	void DetectedFalse (Collider col)
+	{
+		if (col.tag == "Player") {
+			target = null;
+		}
+	}
 
 	IEnumerator Shoot()
 	{

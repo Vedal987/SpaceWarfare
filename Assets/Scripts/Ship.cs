@@ -25,6 +25,8 @@ public class Ship : MonoBehaviour {
 	public GameObject muzzleFlash;
 	public GameObject laser;
 
+	public GameObject explosion;
+
 	public int damage;
 
 	public AudioClip laserSFX;
@@ -36,6 +38,9 @@ public class Ship : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (health <= 0) {
+			Instantiate (explosion, this.transform.position, Quaternion.identity);
+		}
 		vertical = Input.GetAxis ("Vertical");
 		roll = Input.GetAxis ("Roll");
 
